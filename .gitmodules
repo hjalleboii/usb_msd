@@ -1,0 +1,3 @@
+[submodule "fat12"]
+	path = fat12
+	url = https://github.com/hjalleboii/fat12.git
