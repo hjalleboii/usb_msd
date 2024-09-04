@@ -64,14 +64,19 @@ int main(void)
   stdio_init_all();
   
   FAT12 fs((uint8_t*)msc_disk0,sizeof(msc_disk0));
-  fs.Mount();
+  printf("FAT12: %u\n",fs.Mount());
+  fs.Format("TINYCOC",B512,1,false);
+  fs.CreateDir("minskars","txt",{0});
+  fs.SectorSerialDump(2);
+
   //fs.Format("TinyUSB 0  ",B512,1,false);
   // init device stack on configured roothub port
   tud_init(BOARD_TUD_RHPORT);
-  gpio_init(12);
-  gpio_set_dir(12,GPIO_IN);
-  gpio_pull_up(12);
+  gpio_init(0);
+  gpio_set_dir(0,GPIO_IN);
+  gpio_pull_up(0);
   bool done = false;
+  bool pressed = false;
   while (1)
   {
     tud_task(); // tinyusb device task
@@ -84,6 +89,15 @@ int main(void)
       board_led_off();
       done = false;
     }*/
+    if(!gpio_get(0)){
+      if(!pressed){
+        fs.Format("bigcoc",B512,1,false);
+      }
+      board_led_write(1);
+      pressed = true;
+    }else{
+      pressed = false;
+    }
     led_blinking_task();
   }
 
