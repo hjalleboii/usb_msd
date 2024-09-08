@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 #include(littlefs-lib/CMakeLists.txt)
-
+set(CMAKE_ASM_COMPILER "arm-none-eabi-gcc.exe")
 
 include(pico_sdk_import.cmake)
 

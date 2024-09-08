@@ -52,9 +52,9 @@ static uint32_t blink_interval_ms = BLINK_NOT_MOUNTED;
 
 extern uint8_t msc_disk0[64][512];
 
-
-
-
+extern "C"{
+void send_host_update(void);
+}
 void led_blinking_task(void);
 
 /*------------- MAIN -------------*/
@@ -63,15 +63,32 @@ int main(void)
   board_init();
   stdio_init_all();
   
-  FAT12 fs((uint8_t*)msc_disk0,sizeof(msc_disk0));
-  printf("FAT12: %u\n",fs.Mount());
-  fs.Format("TINYCOC",B512,1,false);
-  fs.CreateDir("minskars","txt",{0});
-  fs.SectorSerialDump(2);
+ 
 
   //fs.Format("TinyUSB 0  ",B512,1,false);
   // init device stack on configured roothub port
+
+   FAT12 fs((uint8_t*)msc_disk0,sizeof(msc_disk0));
+  printf("FAT12: %u\n",fs.Mount());
+  fs.Format("TINYCOC",B512,1,false);
+  //fs.CreateDir("minskars","txt",{0});
+  FileHandle fff;
+  int cfr = fs.CreateFile("BAJSKK","TXT",{0},&fff);
+
+  printf("Create File: %i\n",cfr);
+  int cdir = fs.CreateDir("TEST","BBB",{0});
+  PRINT_i(cdir);
+  for(unsigned int i = 0; i < 10; i++){
+    fs.SectorSerialDump(i);
+  }
+  
+
   tud_init(BOARD_TUD_RHPORT);
+
+  
+
+
+  
   gpio_init(0);
   gpio_set_dir(0,GPIO_IN);
   gpio_pull_up(0);
@@ -91,8 +108,11 @@ int main(void)
     }*/
     if(!gpio_get(0)){
       if(!pressed){
-        fs.Format("bigcoc",B512,1,false);
+        fs.SectorSerialDump(1);
+        fs.DeleteFile(&fff);
+        send_host_update();
       }
+    
       board_led_write(1);
       pressed = true;
     }else{
@@ -150,3 +170,4 @@ void led_blinking_task(void)
   board_led_write(led_state);
   led_state = 1 - led_state; // toggle
 }
+

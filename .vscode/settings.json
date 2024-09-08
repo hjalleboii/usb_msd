@@ -1,11 +1,18 @@
 {
-    "cmake.configureEnvironment": {
-        "PICO_SDK_PATH": "/pico-sdk"
+    "cmake.configureSettings": {
+        "cmake.buildDirectory": "${workspaceFolder}/build",
+        "cmake.generator": "MinGW Makefiles"
     },
-    "cmake.buildEnvironment": {
-        "PICO_SDK_PATH": "/pico-sdk"
-    },
-    "cmake.configureOnOpen": true,
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "files.associations": {
+        "tusb.h": "c",
+        "tusb_common.h": "c",
+        "tusb_option.h": "c",
+        "tusb_compiler.h": "c",
+        "tusb_verify.h": "c",
+        "msc_device.h": "c",
+        "usbd.h": "c",
+        "board.h": "c"
+    },
     
 }
