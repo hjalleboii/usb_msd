@@ -73,11 +73,11 @@ int main(void)
   fs.Format("TINYCOC",B512,1,false);
   //fs.CreateDir("minskars","txt",{0});
   FileHandle fff;
-  int cfr = fs.CreateFile("BAJSKK","TXT",{0},&fff);
+  auto cfr = fs.CreateFile("BAJSKK","TXT",{0},&fff);
 
   printf("Create File: %i\n",cfr);
-  int cdir = fs.CreateDir("TEST","BBB",{0});
-  PRINT_i(cdir);
+  auto cdir = fs.CreateDir("TEST","BBB",{0});
+  PRINT_i(cdir.Ok());
   for(unsigned int i = 0; i < 10; i++){
     fs.SectorSerialDump(i);
   }
