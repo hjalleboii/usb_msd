@@ -1,3 +1,6 @@
 [submodule "fat12"]
 	path = fat12
 	url = https://github.com/hjalleboii/fat12.git
+[submodule "rp2040_button_pull_up"]
+	path = rp2040_button_pull_up
+	url = https://github.com/hjalleboii/rp2040_button_pull_up.git
