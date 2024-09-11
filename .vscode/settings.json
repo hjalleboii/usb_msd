@@ -12,7 +12,8 @@
         "tusb_verify.h": "c",
         "msc_device.h": "c",
         "usbd.h": "c",
-        "board.h": "c"
+        "board.h": "c",
+        "button.h": "c"
     },
     
 }

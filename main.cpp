@@ -30,6 +30,7 @@
 #include "bsp/board.h"
 #include "tusb.h"
 #include "PrintfMacros.h"
+#include "button.h"
 //--------------------------------------------------------------------+
 // MACRO CONSTANT TYPEDEF PROTYPES
 //--------------------------------------------------------------------+
@@ -76,7 +77,8 @@ int main(void)
   auto cfr = fs.CreateFile("BAJSKK","TXT",{0},&fff);
 
   printf("Create File: %i\n",cfr);
-  auto cdir = fs.CreateDir("TEST","BBB",{0});
+  FileHandle dir;
+  auto cdir = fs.CreateDir("TEST","BBB",{0},&dir);
   PRINT_i(cdir.Ok());
   for(unsigned int i = 0; i < 10; i++){
     fs.SectorSerialDump(i);
@@ -86,14 +88,14 @@ int main(void)
   tud_init(BOARD_TUD_RHPORT);
 
   
-
-
   
-  gpio_init(0);
-  gpio_set_dir(0,GPIO_IN);
-  gpio_pull_up(0);
+  RP2040_Button_init(0);
+  RP2040_Button_init(1);
+  
   bool done = false;
   bool pressed = false;
+  bool pressed2 = false;
+  char kak[233331];
   while (1)
   {
     tud_task(); // tinyusb device task
@@ -106,17 +108,38 @@ int main(void)
       board_led_off();
       done = false;
     }*/
-    if(!gpio_get(0)){
+    if(RP2040_Button_get(0)){
       if(!pressed){
-        fs.SectorSerialDump(1);
-        fs.DeleteFile(&fff);
-        send_host_update();
+        fs.SectorSerialDump(3);
+        //fs.DeleteFile(&fff);
+        //send_host_update();
       }
     
       board_led_write(1);
       pressed = true;
     }else{
       pressed = false;
+    }
+    if(RP2040_Button_get(1)){
+      if(!pressed2){
+
+        auto file_res = fs.Open(fff,FILE_MODE_READ);
+        fs.SectorSerialDump(3);
+        if(file_res.Ok()){
+          file_res.val;
+
+          uint8_t a=0;
+          memcpy(&a,fs.disk+1536, 1);
+
+          printf("what %u\n",a);
+          fs.Close(&file_res.val);
+        }
+      }
+    
+      board_led_write(1);
+      pressed2 = true;
+    }else{
+      pressed2 = false;
     }
     led_blinking_task();
   }

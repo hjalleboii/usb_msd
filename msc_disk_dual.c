@@ -309,7 +309,7 @@ void tud_msc_inquiry_cb(uint8_t lun, uint8_t vendor_id[8], uint8_t product_id[16
 // return true allowing host to read/write this LUN e.g SD card inserted
 bool tud_msc_test_unit_ready_cb(uint8_t lun)
 {
-  printf("bool tud_msc_test_unit_ready_cb(uint8_t lun)\n");
+  //printf("bool tud_msc_test_unit_ready_cb(uint8_t lun)\n");
   if( reload_disk){
     reload_disk = false;
     return false;
