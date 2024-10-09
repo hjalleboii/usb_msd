@@ -69,20 +69,18 @@ int main(void)
   //fs.Format("TinyUSB 0  ",B512,1,false);
   // init device stack on configured roothub port
 
-   FAT12 fs((uint8_t*)msc_disk0,sizeof(msc_disk0));
-  printf("FAT12: %u\n",fs.Mount());
+  FAT12 fs((uint8_t*)msc_disk0,sizeof(msc_disk0));
   fs.Format("TINYCOC",B512,1,false);
+  fs.Mount();
   //fs.CreateDir("minskars","txt",{0});
   FileHandle fff;
-  auto cfr = fs.CreateFile("BAJSKK","TXT",{0},&fff);
+  //auto cfr = fs.CreateFile("BAJSKK","TXT",{0},&fff);
 
-  printf("Create File: %i\n",cfr);
+  fs.CreateLongFileNameEntry("negerasdasd.txr",15,{0},&fff);
+  //printf("Create File: %i\n",cfr);
   FileHandle dir;
-  auto cdir = fs.CreateDir("TEST","BBB",{0},&dir);
-  PRINT_i(cdir.Ok());
-  for(unsigned int i = 0; i < 10; i++){
-    fs.SectorSerialDump(i);
-  }
+
+  
   
 
   tud_init(BOARD_TUD_RHPORT);
@@ -110,7 +108,10 @@ int main(void)
     }*/
     if(RP2040_Button_get(0)){
       if(!pressed){
-        fs.SectorSerialDump(3);
+        for(unsigned int i = 0; i <8; i++){
+          fs.SectorSerialDump(i);
+        }
+
         //fs.DeleteFile(&fff);
         //send_host_update();
       }
@@ -122,7 +123,7 @@ int main(void)
     }
     if(RP2040_Button_get(1)){
       if(!pressed2){
-
+/*
         auto file_res = fs.Open(fff,FILE_MODE_READ);
         fs.SectorSerialDump(3);
         if(file_res.Ok()){
@@ -133,7 +134,7 @@ int main(void)
 
           printf("what %u\n",a);
           fs.Close(&file_res.val);
-        }
+        }*/
       }
     
       board_led_write(1);

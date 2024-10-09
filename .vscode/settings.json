@@ -1,19 +1,11 @@
 {
-    "cmake.configureSettings": {
-        "cmake.buildDirectory": "${workspaceFolder}/build",
-        "cmake.generator": "MinGW Makefiles"
-    },
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+    "cmake.generator": "MinGW Makefiles",        
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-    "files.associations": {
-        "tusb.h": "c",
-        "tusb_common.h": "c",
-        "tusb_option.h": "c",
-        "tusb_compiler.h": "c",
-        "tusb_verify.h": "c",
-        "msc_device.h": "c",
-        "usbd.h": "c",
-        "board.h": "c",
-        "button.h": "c"
-    },
     
+    "cmake.configureArgs": [
+            "-DPICO_BOARD=macro_keyboard",
+            "-G",
+            "MinGW Makefiles"
+        ]
 }
