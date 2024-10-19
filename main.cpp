@@ -77,6 +77,7 @@ int main(void)
   //auto cfr = fs.CreateFile("BAJSKK","TXT",{0},&fff);
 
   fs.CreateLongFileNameEntry("negerasdasd.txr",15,{0},&fff);
+  fs.DeleteFile(fff);
   //printf("Create File: %i\n",cfr);
   FileHandle dir;
 
@@ -93,7 +94,6 @@ int main(void)
   bool done = false;
   bool pressed = false;
   bool pressed2 = false;
-  char kak[233331];
   while (1)
   {
     tud_task(); // tinyusb device task
