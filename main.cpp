@@ -76,8 +76,10 @@ int main(void)
   FileHandle fff;
   //auto cfr = fs.CreateFile("BAJSKK","TXT",{0},&fff);
 
-  fs.CreateLongFileNameEntry("negerasdasd.txr",15,{0},&fff);
-  fs.DeleteFile(fff);
+  fs.CreateLongFileNameEntry("ingen seger utan varan neger.txr",32,{0},&fff);
+  PRINT_i(fff.dirindex);
+  PRINT_i(fff.direntry);
+  //fs.DeleteFile(fff);
   //printf("Create File: %i\n",cfr);
   FileHandle dir;
 
