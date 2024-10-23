@@ -77,6 +77,13 @@ int main(void)
   //auto cfr = fs.CreateFile("BAJSKK","TXT",{0},&fff);
 
   fs.CreateLongFileNameEntry("ingen seger utan varan neger.txr",32,{0},&fff);
+
+  HANDLE_ERROR(FileIOHandle, fioh,fs.Open(fff,FILE_MODE_WRITE),return {ERROR}); 
+
+  fs.Write(fioh,(const uint8_t*)"INGEN SEGER UTAN EN TALIBAN NEGER\n",34);
+
+  fs.Close(&fioh);
+
   PRINT_i(fff.dirindex);
   PRINT_i(fff.direntry);
   //fs.DeleteFile(fff);
